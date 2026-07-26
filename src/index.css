@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #ffffff;
+    color: #111827;
+  }
+
+  #root {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@layer components {
+
+  /* Sidebar */
+  .sidebar {
+    @apply w-52 min-h-screen border-r border-gray-200 flex flex-col bg-white;
+  }
+
+  /* Nav item */
+  .nav-item {
+    @apply flex items-center justify-between px-3 py-2 rounded-lg cursor-pointer text-sm text-gray-700 transition-colors duration-150 hover:bg-gray-100;
+  }
+
+  .nav-item.active {
+    @apply bg-[#F0FDF4] text-[#16A34A] font-medium;
+  }
+
+  /* Compose button */
+  .btn-compose {
+    @apply border border-[#22C55E] text-[#22C55E] rounded-full px-4 py-1.5 text-sm font-medium hover:bg-[#F0FDF4] transition-colors duration-150 cursor-pointer;
+  }
+
+  /* Primary green button */
+  .btn-primary {
+    @apply bg-[#22C55E] text-white rounded-lg px-4 py-2.5 text-sm font-medium hover:bg-[#16A34A] transition-colors duration-150 cursor-pointer;
+  }
+
+  /* Secondary outlined button */
+  .btn-secondary {
+    @apply border border-[#22C55E] text-[#22C55E] rounded-lg px-4 py-2.5 text-sm font-medium hover:bg-[#F0FDF4] transition-colors duration-150 cursor-pointer;
+  }
+
+  /* Email row */
+  .email-row {
+    @apply flex items-center gap-3 px-4 py-3 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors duration-100;
+  }
+
+  /* Badge */
+  .badge-scheduled {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-[#FEF3C7] text-[#D97706];
+  }
+
+  .badge-sent {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-[#DCFCE7] text-[#16A34A];
+  }
+
+  .badge-failed {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-[#FEE2E2] text-[#DC2626];
+  }
+
+  .badge-rate-limited {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-[#FEF9C3] text-[#92400E];
+  }
+
+  /* Form input */
+  .form-input {
+    @apply w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 bg-[#F9FAFB] focus:outline-none focus:ring-2 focus:ring-[#22C55E] focus:border-transparent placeholder-gray-400 transition;
+  }
+
+  /* Search input */
+  .search-input {
+    @apply w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm text-gray-700 bg-gray-50 focus:outline-none focus:ring-1 focus:ring-[#22C55E] placeholder-gray-400;
+  }
+
+  /* Email chip tag */
+  .email-chip {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 bg-white border border-gray-300 rounded-full text-xs text-gray-700;
+  }
+}
+
+/* Spinner animation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  animation: spin 0.75s linear infinite;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
