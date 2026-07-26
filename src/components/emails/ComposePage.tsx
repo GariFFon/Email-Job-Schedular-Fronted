@@ -52,6 +52,7 @@ export default function ComposePage({
   const attachmentInputRef = useRef<HTMLInputElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<HTMLDivElement>(null);
+  const dateInputRef = useRef<HTMLInputElement>(null);
 
   // Close popover when clicking outside
   useEffect(() => {
@@ -168,6 +169,17 @@ export default function ComposePage({
     const hours = String(d.getHours()).padStart(2, '0');
     const mins = String(d.getMinutes()).padStart(2, '0');
     return `${year}-${month}-${day}T${hours}:${mins}`;
+  };
+
+  const formatDisplayDate = (val: string) => {
+    if (!val) return 'Pick date & time';
+    try {
+      const d = new Date(val);
+      if (isNaN(d.getTime())) return val;
+      return d.toLocaleString([], { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    } catch {
+      return val;
+    }
   };
 
   const handlePresetClick = (type: string) => {
@@ -341,21 +353,29 @@ export default function ComposePage({
                 <h3 className="text-base font-semibold text-gray-900 mb-3">Send Later</h3>
                 
                 {/* Date & Time Picker */}
-                <div className="relative mb-4">
+                <div 
+                  onClick={() => {
+                    try {
+                      dateInputRef.current?.showPicker();
+                    } catch (err) {
+                      dateInputRef.current?.focus();
+                    }
+                  }}
+                  className="relative mb-4 w-full text-sm bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-gray-700 cursor-pointer flex items-center justify-between hover:border-gray-300 transition-all overflow-hidden"
+                >
+                  <span className={tempScheduledAt ? "text-gray-900 font-medium" : "text-gray-400"}>
+                    {formatDisplayDate(tempScheduledAt)}
+                  </span>
+                  <svg className="w-4 h-4 text-gray-400 flex-shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
                   <input
+                    ref={dateInputRef}
                     type="datetime-local"
                     value={tempScheduledAt}
                     onChange={(e) => setTempScheduledAt(e.target.value)}
-                    className="w-full text-sm bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-gray-700 outline-none focus:ring-2 focus:ring-[#22C55E] transition-all"
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                   />
-                  {!tempScheduledAt && (
-                    <span className="absolute left-3 top-2.5 text-sm text-gray-400 pointer-events-none">
-                      Pick date & time
-                    </span>
-                  )}
-                  <svg className="w-4 h-4 text-gray-400 absolute right-3 top-3 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
                 </div>
 
                 {/* Presets List */}
