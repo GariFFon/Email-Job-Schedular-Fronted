@@ -90,10 +90,23 @@ export default function Dashboard() {
 
   const emails = activeTab === 'scheduled' ? scheduledEmails : sentEmails;
 
+  if (view === 'compose' && user) {
+    return (
+      <div className="fixed inset-0 z-50 bg-white flex flex-col h-screen w-screen overflow-hidden">
+        <Toaster position="top-right" />
+        <ComposePage
+          userEmail={user.email}
+          userName={user.name}
+          onBack={handleBack}
+          onSuccess={handleComposeSuccess}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="h-screen flex flex-col overflow-hidden">
       <Toaster position="top-right" />
-
 
       {/* Main layout */}
       <div className="flex flex-1 overflow-hidden bg-white">
@@ -107,14 +120,7 @@ export default function Dashboard() {
 
         {/* Main content */}
         <main className="flex-1 overflow-y-auto border-l border-gray-200">
-          {view === 'compose' && user ? (
-            <ComposePage
-              userEmail={user.email}
-              userName={user.name}
-              onBack={handleBack}
-              onSuccess={handleComposeSuccess}
-            />
-          ) : view === 'detail' && selectedEmail && user ? (
+          {view === 'detail' && selectedEmail && user ? (
             <EmailDetail
               email={selectedEmail}
               userName={user.name}

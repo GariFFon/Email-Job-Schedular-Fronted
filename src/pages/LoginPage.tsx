@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
-import { useAuth } from '../context/AuthContext';
 import { authApi } from '../services/api';
 import Spinner from '../components/ui/Spinner';
 
@@ -9,8 +7,6 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
-  const navigate = useNavigate();
 
   const handleGoogleLogin = () => {
     window.location.href = authApi.googleLoginUrl();
